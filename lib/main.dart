@@ -135,7 +135,7 @@ class PointView extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-            itemCount: 11,
+            itemCount: 12,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
                 return Row(
@@ -174,6 +174,46 @@ class PointView extends StatelessWidget {
                               } else {
                                 model.nextPlayer();
                               }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              if (index == 11) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        width: 80,
+                        height: 70,
+                        child: Card(
+                          child: OutlinedButton(
+                            child: Text(
+                              "25",
+                              style: TextStyle(fontSize: 40),
+                            ),
+                            onPressed: () {
+                              model.addCurPoints(25);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 80,
+                        height: 70,
+                        child: Card(
+                          child: OutlinedButton(
+                            child: Text(
+                              "50",
+                              style: TextStyle(fontSize: 40),
+                            ),
+                            onPressed: () {
+                              model.addCurPoints(50);
                             },
                           ),
                         ),
@@ -282,11 +322,4 @@ class Overzicht extends StatelessWidget {
   }
 }
 
-class Finish extends StatelessWidget {
-  const Finish({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
