@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter/material.dart';
 
 class Player extends Model {
   int maxPoints = 100;
   int currentPlayer = 0;
   int currentPoints = 0;
   List<int> players = [0];
+  List<Color> colors = [];
 
   int getNumPlayers(){
     return players.length;
@@ -65,8 +69,28 @@ class Player extends Model {
     return true;
   }
 
+  Color getColor(){
+    return colors[currentPlayer];
+  }
+  Color getPColor(int i){
+    return colors[i];
+  }
+
+
+  void setColors(){
+    colors.clear();
+    for(int i=0; i<players.length; i++){
+      Color c = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+      if (colors.contains(c)){
+        c = Colors.accents[Random().nextInt(Colors.primaries.length)];
+      }
+      colors.add(c);
+    }
+  }
+
   void reset(){
     setPlayers(players.length);
+    setColors();
     currentPlayer = 0;
     currentPoints = 0;
   }

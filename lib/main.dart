@@ -59,15 +59,19 @@ class Home extends StatelessWidget {
                     model.setPlayers(int.parse(text));
                   },
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 ScopedModelDescendant<Player>(builder: (context, child, model) {
                   return ElevatedButton(
-                    onPressed: (){
-                      model.reset();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => PlayerView()));
-                    }, 
-                    child: Text("Start")
-                  );
+                      onPressed: () {
+                        model.reset();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PlayerView()));
+                      },
+                      child: Text("Start"));
                 }),
               ]);
             }),
@@ -83,46 +87,41 @@ class PlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: Overzicht(),
-      ),
-      appBar: AppBar(
-        title: ScopedModelDescendant<Player>(
-          builder: (context, child, model) {
-            return Text("Player " + model.getCurrent().toString());
-          },
+    return ScopedModelDescendant<Player>(builder: (context, child, model) {
+      return Scaffold(
+        drawer: Drawer(
+          child: Overzicht(),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.home),
-          ),
-        ],
-      ),
-      body: ScopedModelDescendant<Player>(
-        builder: (context, child, model) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text(
-                  "Needed: " + model.needed().toString(),
-                  style: TextStyle(fontSize: 50),
-                ),
-                Text(
-                  "Selected: " + model.getCur().toString(),
-                  style: TextStyle(fontSize: 40),
-                ),
-                Expanded(child: PointView()),
-              ],
+        appBar: AppBar(
+          backgroundColor: model.getColor(),
+          title: Text("Player " + model.getCurrent().toString()),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.home),
             ),
-          );
-        },
-      ),
-    );
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text(
+                "Needed: " + model.needed().toString(),
+                style: TextStyle(fontSize: 50),
+              ),
+              Text(
+                "Selected: " + model.getCur().toString(),
+                style: TextStyle(fontSize: 40),
+              ),
+              Expanded(child: PointView()),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
 
@@ -148,7 +147,7 @@ class PointView extends StatelessWidget {
                           child: OutlinedButton(
                             child: Text(
                               "Clear",
-                              style: TextStyle(fontSize: 40),
+                              style: TextStyle(fontSize: 40, color: model.getColor()),
                             ),
                             onPressed: () {
                               model.clrCurPoints();
@@ -165,7 +164,7 @@ class PointView extends StatelessWidget {
                           child: OutlinedButton(
                             child: Text(
                               "Next",
-                              style: TextStyle(fontSize: 40),
+                              style: TextStyle(fontSize: 40, color: model.getColor()),
                             ),
                             onPressed: () {
                               model.addPoints();
@@ -193,7 +192,7 @@ class PointView extends StatelessWidget {
                           child: OutlinedButton(
                             child: Text(
                               "25",
-                              style: TextStyle(fontSize: 40),
+                              style: TextStyle(fontSize: 40, color: model.getColor()),
                             ),
                             onPressed: () {
                               model.addCurPoints(25);
@@ -210,7 +209,7 @@ class PointView extends StatelessWidget {
                           child: OutlinedButton(
                             child: Text(
                               "50",
-                              style: TextStyle(fontSize: 40),
+                              style: TextStyle(fontSize: 40, color: model.getColor()),
                             ),
                             onPressed: () {
                               model.addCurPoints(50);
@@ -233,7 +232,7 @@ class PointView extends StatelessWidget {
                         child: OutlinedButton(
                           child: Text(
                             (index * 2 + 1).toString(),
-                            style: TextStyle(fontSize: 40),
+                            style: TextStyle(fontSize: 40, color: model.getColor()),
                           ),
                           onPressed: () {
                             model.addCurPoints(index * 2 + 1);
@@ -250,7 +249,7 @@ class PointView extends StatelessWidget {
                         child: OutlinedButton(
                           child: Text(
                             (index * 2 + 2).toString(),
-                            style: TextStyle(fontSize: 40),
+                            style: TextStyle(fontSize: 40, color: model.getColor()),
                           ),
                           onPressed: () {
                             model.addCurPoints(index * 2 + 2);
@@ -305,11 +304,11 @@ class Overzicht extends StatelessWidget {
                   children: [
                     Text(
                       "Player " + (index + 1).toString(),
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 30, color: model.getPColor(index)),
                     ),
                     Text(
                       model.getPoints(index).toString(),
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 30, color: model.getPColor(index)),
                     ),
                   ],
                 ),
@@ -321,5 +320,3 @@ class Overzicht extends StatelessWidget {
     );
   }
 }
-
-
